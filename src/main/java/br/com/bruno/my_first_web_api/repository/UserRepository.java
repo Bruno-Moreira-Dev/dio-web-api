@@ -1,5 +1,7 @@
 package br.com.bruno.my_first_web_api.repository;
 
+import br.com.bruno.my_first_web_api.handler.BusinessException;
+import br.com.bruno.my_first_web_api.handler.RequiredFieldException;
 import br.com.bruno.my_first_web_api.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,12 @@ import java.util.List;
 @Repository
 public class UserRepository {
     public void save(User user) {
+        if (user.getLogin() == null) {
+            throw new RequiredFieldException("login");
+        }
+        if (user.getPassword() == null) {
+            throw new RequiredFieldException("password");
+        }
         if (user.getId() == null) {
             System.out.println("SAVE - Recebendo o usuário na camada de repositório");
         } else {
